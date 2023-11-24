@@ -28,7 +28,7 @@ def sensation_recommendations(name):
     perfume_indices = perfume_indices[1:6]
     rec = perfume_df[['Name', 'Brand', 'Description']].iloc[perfume_indices]
 
-    return st.dataframe(rec, hide_index=True)
+    return st.dataframe(rec)
 
 
 ## Page configuration
