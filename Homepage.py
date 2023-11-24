@@ -24,7 +24,6 @@ def main():
     col2.image(scent_image, use_column_width=True)
     st.header('Welcome to the fragrance matchmaker')
     st.write('Head to the sidebar to select your matchmaker and discover your new favourite perfume')
-    st.divider()
     st.subheader('Scent Matcher')
     st.write('Matches by scent notes for favourite fragances')
     st.subheader('Sensation Matcher')
