@@ -23,7 +23,8 @@ def scent_recommendations(name, cosine_sim_df=cosine_sim_df):
     sim_scores = sim_scores[1:6]
     perfume_indices = [i[0] for i in sim_scores]
     rec = perfume_df[['Name', 'Brand', 'Notes']].iloc[perfume_indices]
-    st.dataframe(rec, hide_index=True)
+    
+    return st.dataframe(rec)
 
 
 ## Page configuration
