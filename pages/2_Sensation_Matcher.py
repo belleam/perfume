@@ -6,14 +6,18 @@ from PIL import Image
 from sklearn.neighbors import NearestNeighbors
 
 
-## Load the data
-perfume_df = pd.read_csv('perfume_df.csv')
-sent_mat_df = pd.read_csv('sent_matrix_df.csv')
-sent_indices = pd.Series(sent_mat_df.index, index=perfume_df['Name']).drop_duplicates()
-
-
 ## Page configuration
 st.set_page_config(page_title='Sensation matcher', layout='wide')
+
+
+## Load the data
+@st.cache_data
+def load_data(url):
+    perfume_df = pd.read_csv(url)
+    return perfume_df
+perfume_df = load_data('https://raw.githubusercontent.com/belleam/perfume/main/perfume_df.csv')
+sent_mat_df = pd.read_csv('sent_matrix_df.csv')
+sent_indices = pd.Series(sent_mat_df.index, index=perfume_df['Name']).drop_duplicates()
 
 
 ## Function for the recommendation

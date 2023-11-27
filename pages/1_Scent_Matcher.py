@@ -5,14 +5,18 @@ import numpy as np
 from PIL import Image
 
 
-## Load the data
-perfume_df = pd.read_csv('perfume_df.csv')
-cosine_sim_df = pd.read_csv('scent_csim_df.csv')
-note_indices = pd.Series(cosine_sim_df.index, index=perfume_df['Name']).drop_duplicates()
-
-
 ## Page configuration
 st.set_page_config(page_title='Scent matcher', page_icon='🫧', layout='wide')
+
+
+## Load the data
+@st.cache_data
+def load_data(url):
+    perfume_df = pd.read_csv(url)
+    return perfume_df
+perfume_df = load_data('https://raw.githubusercontent.com/belleam/perfume/main/perfume_df.csv')
+cosine_sim_df = pd.read_csv('scent_csim_df.csv')
+note_indices = pd.Series(cosine_sim_df.index, index=perfume_df['Name']).drop_duplicates()
 
 
 ## Function for the recommendation

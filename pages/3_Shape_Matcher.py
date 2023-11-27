@@ -6,15 +6,19 @@ from PIL import Image
 import requests
 
 
+## Page configuration
+st.set_page_config(page_title='Shape matcher', layout='wide')
+
+
 ## Load the data
-perfume_df = pd.read_csv('perfume_df.csv')
+@st.cache_data
+def load_data(url):
+    perfume_df = pd.read_csv(url)
+    return perfume_df
+perfume_df = load_data('https://raw.githubusercontent.com/belleam/perfume/main/perfume_df.csv')
 csim = pd.read_csv('shape_csim_df.csv')
 csim = csim.drop(['Unnamed: 0.1', 'Unnamed: 0'], axis=1)
 shape_indices = pd.Series(csim.index, index=perfume_df['Name']).drop_duplicates()
-
-
-## Page configuration
-st.set_page_config(page_title='Shape matcher', layout='wide')
 
 
 ## Function for the recommendation
