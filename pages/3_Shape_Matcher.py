@@ -34,12 +34,37 @@ def shape_recommendations(name):
             st.image(perfume_df['Image URL'].loc[i], width=150)
             st.write(perfume_df['Name'].loc[i])
             st.write(perfume_df['Brand'].loc[i])
-    for i in get_numbers[2:5]:
+    for i in get_numbers[2:4]:
         with col2:
             st.image(perfume_df['Image URL'].loc[i], width=150)
             st.write(perfume_df['Name'].loc[i])
             st.write(perfume_df['Brand'].loc[i])
 
+
+## Function for the recommendation
+def other_brand_recs(name):
+    idx = shape_indices[name]
+    nb_closest_images = 45
+    closest_shapes = csim.loc[idx].sort_values(ascending=False)[1:nb_closest_images+1].index
+    get_numbers = [float(i) for i in closest_shapes]
+    st.write('Similar bottles')
+    col1, col2 = st.columns(2)
+
+    different_brands = []
+    for i in get_numbers:
+        if perfume_df['Brand'].loc[i] != perfume_df['Brand'].loc[idx]:
+            different_brands.append(i)
+    
+    for i in different_brands[0:2]:
+        with col1:
+                st.image(perfume_df['Image URL'].loc[i], width=150)
+                st.write(perfume_df['Name'].loc[i])
+                st.write(perfume_df['Brand'].loc[i])
+    for i in different_brands[2:4]:
+            with col2:
+                st.image(perfume_df['Image URL'].loc[i], width=150)
+                st.write(perfume_df['Name'].loc[i])
+                st.write(perfume_df['Brand'].loc[i])
 
 ## Page configuration
 def main():
@@ -65,6 +90,11 @@ def main():
     ## Button
     if st.button('Meet your match'):
         matchmake = shape_recommendations(name)
+
+    ## Button that shows bottles from different brands
+    discover = ''
+    if st.button('Show me different brands'):
+        discover = other_brand_recs(name)
 
 
 if __name__ == '__main__':
